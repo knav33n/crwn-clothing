@@ -23,7 +23,7 @@ export default function SignInForm() {
     e.preventDefault();
 
     try {
-      const response = await signInAuthUserWithEmailAndPassword(
+      const { user } = await signInAuthUserWithEmailAndPassword(
         email,
         password
       );
@@ -50,8 +50,7 @@ export default function SignInForm() {
 
   const signInWithGoogle = async (e) => {
     e.preventDefault();
-    const { user } = await signInWithGooglePopup();
-    await createUserDocumentFromAuth(user);
+    await signInWithGooglePopup();
   };
 
   return (
