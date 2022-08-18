@@ -1,8 +1,13 @@
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { selectCategoriesIsLoading } from "../../store/categories/category.selector";
 import ProductCard from "../product-card/product-card.component";
+import Spinner from "../spinner/spinner.component";
 import "./category-preview.styles.scss";
 
 export default function CategoryPreview({ title, products }) {
+  const isLoading = useSelector(selectCategoriesIsLoading);
+
   return (
     <div className="category-preview-container">
       <h2>
@@ -10,13 +15,17 @@ export default function CategoryPreview({ title, products }) {
           {title.toUpperCase()}
         </Link>
       </h2>
-      <div className="preview">
-        {products
-          .filter((_, idx) => idx < 4)
-          .map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-      </div>
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <div className="preview">
+          {products
+            .filter((_, idx) => idx < 4)
+            .map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+        </div>
+      )}
     </div>
   );
 }
