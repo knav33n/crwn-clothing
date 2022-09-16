@@ -7,6 +7,7 @@ import {
 } from "../../utils/reducer/reducer.utils";
 import { USER_ACTION_TYPES } from "./user.types";
 import { UserData } from "../../utils/firebase/firebase.utils";
+import { User } from "firebase/auth";
 
 export type SetCurrentUser = ActionWithPayload<
   USER_ACTION_TYPES.SET_CURRENT_USER,
@@ -28,7 +29,7 @@ export type SignUpStart = ActionWithPayload<
 >;
 export type SignUpSuccess = ActionWithPayload<
   USER_ACTION_TYPES.SIGN_UP_SUCCESS,
-  { user: UserData; additionalDetails: AdditionalInformation }
+  { user: User; additionalDetails: AdditionalInformation }
 >;
 export type SignOutStart = Action<USER_ACTION_TYPES.SIGN_OUT_START>;
 export type SignOutSuccess = Action<USER_ACTION_TYPES.SIGN_OUT_SUCCESS>;
@@ -36,7 +37,7 @@ export type AuthFailed = ActionWithPayload<
   | USER_ACTION_TYPES.SIGN_UP_FAILED
   | USER_ACTION_TYPES.SIGN_OUT_FAILED
   | USER_ACTION_TYPES.SIGN_IN_FAILED,
-  string
+  Error
 >;
 
 export const setCurrentUser = withMatcher((user: UserData) =>
@@ -57,7 +58,7 @@ export const emailSignInStart = withMatcher(
 );
 
 export const signInSuccess = withMatcher(
-  (user: UserData): SignInSuccess =>
+  (user: UserData & { id: string }): SignInSuccess =>
     createAction(USER_ACTION_TYPES.SIGN_IN_SUCCESS, user)
 );
 
@@ -71,7 +72,7 @@ export const signUpStart = withMatcher(
 );
 
 export const signUpSuccess = withMatcher(
-  (user: UserData, additionalDetails: AdditionalInformation): SignUpSuccess =>
+  (user: User, additionalDetails: AdditionalInformation): SignUpSuccess =>
     createAction(USER_ACTION_TYPES.SIGN_UP_SUCCESS, { user, additionalDetails })
 );
 
@@ -84,14 +85,14 @@ export const signOutSuccess = withMatcher(() =>
 );
 
 export const signUpFailed = withMatcher(
-  (error: string): AuthFailed =>
+  (error: Error): AuthFailed =>
     createAction(USER_ACTION_TYPES.SIGN_UP_FAILED, error)
 );
 export const signInFailed = withMatcher(
-  (error: string): AuthFailed =>
+  (error: Error): AuthFailed =>
     createAction(USER_ACTION_TYPES.SIGN_IN_FAILED, error)
 );
 export const signOutFailed = withMatcher(
-  (error: string): AuthFailed =>
+  (error: Error): AuthFailed =>
     createAction(USER_ACTION_TYPES.SIGN_OUT_FAILED, error)
 );
