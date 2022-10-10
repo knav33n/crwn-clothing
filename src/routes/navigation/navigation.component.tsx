@@ -6,7 +6,6 @@ import CartIcon from "../../components/cart-icon/cart-icon.component";
 import { selectIsCartOpen } from "../../store/cart/cart.selector";
 import { signOutStart } from "../../store/user/user.action";
 import { selectCurrentUser } from "../../store/user/user.selector";
-import { signOutUser } from "../../utils/firebase/firebase.utils";
 import {
   LogoContainer,
   NavigationContainer,
