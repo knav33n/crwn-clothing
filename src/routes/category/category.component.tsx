@@ -6,7 +6,7 @@ import {
   selectCategoriesIsLoading,
   selectCategoriesMap,
 } from "../../store/categories/category.selector";
-import { CategoryContainer, CategoryTitle } from "./category.styles.js";
+import { CategoryContainer, CategoryTitle } from "./category.styles";
 import Spinner from "../../components/spinner/spinner.component";
 
 type CategoryRouteParams = {
